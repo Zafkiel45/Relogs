@@ -30,6 +30,8 @@ async function HandleCreateNewYearLog() {
         await mkdir(directory, {recursive: true});
     } catch (err) {
         console.error('An error occurred:', err);
+        console.error('Probably, you typed the wrong flag. Please, use "--new-year"');
+        console.error('for detailed information, see at: https://github.com/Zafkiel45/Relogs')
     };
 };
 async function HandleCreateNewMonthLog() {
@@ -40,6 +42,8 @@ async function HandleCreateNewMonthLog() {
         await mkdir(directory, {recursive: true});
     } catch (err) {
         console.error('An error ocurred', err);
+        console.error('please, check if the folder of year exists');
+        console.error('if you do not known as create the year folder, see at: https://github.com/Zafkiel45/Relogs')
     };
 };
 async function HandleCreateNewDayLog() {
@@ -48,6 +52,9 @@ async function HandleCreateNewDayLog() {
         await writeFile(directory, '');
     } catch (err) {
         console.error('An error occurred:', err); 
+        console.error('check if the folder of year exists.');
+        console.error('check if the folder of month exists.');
+        console.error('if you do not known as create the folders, see at: https://github.com/Zafkiel45/Relogs')
     };
 };
 async function HandleAddNewLog() {
@@ -87,11 +94,11 @@ async function HandleAddNewLog() {
             console.error('Or forgotted to pass the values...');
             console.error('Please, use some of thoses flags', flags);
             console.error('make sure to use the correct flags');
-            console.error('more information on:') 
-        }
+            console.error('more information on: https://github.com/Zafkiel45/Relogs') 
+        };
     } catch (err) {
-        console.error('ocurred an error:', err);
-    }
+        console.error('An error occurred:', err);
+    };
 };
 async function HandleReadLog() {
     try {
@@ -110,9 +117,9 @@ async function HandleReadLog() {
         }
     } catch (err) {
         console.error(err);
+        console.error('Please, pass the year follow by month(the first three characters in english) and log date');
     };
 };
-
 function HandleStyleConsole(content) {
     Array.from(content).forEach((item) => {
         const currentLine = item.split(' ');
