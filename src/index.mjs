@@ -16,7 +16,7 @@ const months = [
 
 const logTypes = [
     'info', 'warn', 'bad-behaviour', 
-    'problem', 'entreteinment',
+    'problem', 'entertainment',
 ]
 
 const flags = [
@@ -73,7 +73,7 @@ async function HandleAddNewLog() {
             const seconds = date.getSeconds();
 
             if(logTypes.includes(args[2])) {
-                logType = `[${[args[2].toUpperCase().trim()]}]:`;
+                logType = `[${[args[2].toUpperCase().trim()]}]: `;
             } else {
                 console.error(`this type: ${args[2]} doesn't exist`);
                 console.error(`please, use some of thoses types: ${logTypes}`);
@@ -93,7 +93,6 @@ async function HandleAddNewLog() {
         console.error('ocurred an error:', err);
     }
 };
-
 async function HandleReadLog() {
     try {
         if(args[1] && args[2] && args[3]) {
@@ -104,13 +103,41 @@ async function HandleReadLog() {
 
             const directory = path.join('..', 'logs', `log-${year}-year`, `${month}`, `${date}-day.log`);
             const logContent = await readFile(directory);
-            console.log(logContent.toString());
+
+            HandleStyleConsole(logContent.toString().trim().split('\n'));
         } else {
             throw new Error('some arguments is missing');
         }
     } catch (err) {
         console.error(err);
     };
+};
+
+function HandleStyleConsole(content) {
+    Array.from(content).forEach((item) => {
+        const currentLine = item.split(' ');
+        const contentWithoutType = currentLine.slice(1).join(' ');
+
+        switch(currentLine[0]) {
+            case '[INFO]:':
+                console.log(`\x1b[32m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+            break
+            case '[BAD-BEHAVIOUR]:':
+                console.log(`\x1b[31m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+            break
+            case '[PROBLEM]:':
+                console.log(`\x1b[31m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+            break
+            case '[WARN]:':
+                console.log(`\x1b[33m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+            break
+            case '[ENTERTAINMENT]:':
+                console.log(`\x1b[34m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+            break
+            
+        }
+
+    });
 };
 
 switch(args[0]) {
