@@ -116,27 +116,26 @@ async function HandleReadLog() {
 function HandleStyleConsole(content) {
     Array.from(content).forEach((item) => {
         const currentLine = item.split(' ');
-        const contentWithoutType = currentLine.slice(1).join(' ');
+        const contentWithoutType = '\x1b[0m' + currentLine.slice(1).join(' ');
+        const logType = currentLine[0]
 
-        switch(currentLine[0]) {
+        switch(logType) {
             case '[INFO]:':
-                console.log(`\x1b[32m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+                console.log(`\x1b[32m${logType}`, contentWithoutType);
             break
             case '[BAD-BEHAVIOUR]:':
-                console.log(`\x1b[31m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+                console.log(`\x1b[31m${logType}`, contentWithoutType);
             break
             case '[PROBLEM]:':
-                console.log(`\x1b[31m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+                console.log(`\x1b[31m${logType}`, contentWithoutType);
             break
             case '[WARN]:':
-                console.log(`\x1b[33m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+                console.log(`\x1b[33m${logType}`, contentWithoutType);
             break
             case '[ENTERTAINMENT]:':
-                console.log(`\x1b[34m${currentLine[0]}`, `\x1b[0m${contentWithoutType}`);
+                console.log(`\x1b[34m${logType}`, contentWithoutType);
             break
-            
         }
-
     });
 };
 
