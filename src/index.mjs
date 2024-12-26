@@ -1,4 +1,4 @@
-import { writeFile, mkdir, appendFile}  from "node:fs/promises";
+import { writeFile, mkdir, appendFile, readFile}  from "node:fs/promises";
 import { argv } from "node:process";
 import path from "node:path";
 
@@ -94,6 +94,25 @@ async function HandleAddNewLog() {
     }
 };
 
+async function HandleReadLog() {
+    try {
+        if(args[1] && args[2] && args[3]) {
+
+            const year = Number(args[1]);
+            const month = String(args[2]);
+            const date = Number(args[3]);
+
+            const directory = path.join('..', 'logs', `log-${year}-year`, `${month}`, `${date}-day.log`);
+            const logContent = await readFile(directory);
+            console.log(logContent.toString());
+        } else {
+            throw new Error('some arguments is missing');
+        }
+    } catch (err) {
+        console.error(err);
+    };
+};
+
 switch(args[0]) {
     case '--new-year':
         HandleCreateNewYearLog();
@@ -107,6 +126,9 @@ switch(args[0]) {
     case '--add-register':
         HandleAddNewLog();
     break 
+    case '--read-log':
+        HandleReadLog();
+    break
     default:
         console.log('none options was selected');
 }
