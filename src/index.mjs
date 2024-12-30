@@ -23,6 +23,10 @@ const flags = [
     '-t', '--type', '-c', '--content'
 ]
 
+const commandsList = [
+    "--new-year", "--new-month", "--new-day", "--add-register", "--read-log"
+];
+
 async function HandleCreateNewYearLog() {
     try {
         const directory = path.join('..', 'logs', `log-${currentYear}-year`);
@@ -162,6 +166,10 @@ switch(args[0]) {
     case '--read-log':
         HandleReadLog();
     break
+    case '--help':
+        console.log(commandsList);
+        console.log('for information of use, see at: https://github.com/Zafkiel45/Relogs')
+    break 
     default:
-        console.log('none options was selected');
+        console.log('use --help command to show a list of avaliable commands');
 }
